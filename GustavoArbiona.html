@@ -48,6 +48,8 @@
         </select>
         <input type="text" id="searchValue">
         <button type="button" class="btn btn-success">Search</button>
+        <hr>
+        <button type="button" class="btn btn-dark">Sort here</button>
       <div class="row">
 
       </div>
@@ -70,8 +72,8 @@
                     <h5 class="card-title">${jpattern[i].name}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${jpattern[i].username}</h6>
                     <p class="card-text">Company:<br>${jpattern[i].company.name}
-                    <br>Address:<br>${jpattern[i].address.suite}<br> ${jpattern[i].address.street}<br>
-                    ${jpattern[i].address.zipcode} ${jpattern[i].address.city}</p>
+                    <br>Address:<br>${jpattern[i].address.suite},<br> ${jpattern[i].address.street},<br>
+                    ${jpattern[i].address.zipcode}, ${jpattern[i].address.city}</p>
                     <a href="mailto:${jpattern[i].email}" class="card-link">Email</a>
                     <a href="https://www.${jpattern[i].website}" class="card-link">Website</a>
                   </div>
@@ -85,7 +87,6 @@
               let searchV=document.getElementById("searchValue").value;
               mainRow.innerText="";
               let jpattern2= await jpattern.filter(function(element){
-                console.log(element[searchParam]);
                 return element[searchParam].toLowerCase().includes(searchV.toLowerCase());
               })
               for (i=0;i<jpattern2.length;i++){
@@ -96,8 +97,8 @@
                     <h5 class="card-title">${jpattern2[i].name}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${jpattern2[i].username}</h6>
                     <p class="card-text">Company:<br>${jpattern2[i].company.name}
-                    <br>Address:<br>${jpattern2[i].address.suite}<br> ${jpattern2[i].address.street}<br>
-                    ${jpattern2[i].address.zipcode} ${jpattern2[i].address.city}</p>
+                    <br>Address:<br>${jpattern2[i].address.suite},<br> ${jpattern2[i].address.street},<br>
+                    ${jpattern2[i].address.zipcode}, ${jpattern2[i].address.city}</p>
                     <a href="mailto:${jpattern2[i].email}" class="card-link">Email</a>
                     <a href="https://www.${jpattern2[i].website}" class="card-link">Website</a>
                   </div>
@@ -105,7 +106,19 @@
               </div>`;
             }
             })
-            console.log(jpattern);
+            // let order=false;
+            // document.querySelector(".btn-dark").addEventListener("click", function (){
+            //   if (jpattern2.length>)
+            //   order = !order;
+            //   contacts.sort(function (a, b) {
+            //   const x = a.name.toLowerCase();
+            //   const y = b.name.toLowerCase();
+            //   return (order ? x > y : x < y);
+            //   });
+            //   console.log(contacts);
+            // })
+          console.log(jpattern);
+
           }
         }
         catch{
@@ -117,7 +130,8 @@
         document.querySelector(".btn-success").addEventListener("click", function(){
           let searchV=document.getElementById("searchValue").value;
         })
-      }
+        
+    }
     </script>
 
     <!-- Optional JavaScript -->
