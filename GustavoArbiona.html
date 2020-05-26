@@ -38,6 +38,71 @@
 
   </head>
   <body>
+    <div class="container">
+
+        <label for="selectors">Choose a selector:</label>
+        <select id="selectors" name="selectors">
+          <option value="name">Name</option>
+          <option value="username">Username</option>
+          <option value="email">Email</option>
+        </select>
+        <input type="text" id="searchValue">
+        <button type="button" class="btn btn-success">Search</button>
+      <div class="row">
+
+      </div>
+    </div>
+    <script>
+      let searchParam="name";
+      window.onload = async function(){
+        
+        try{
+          let pattern=await fetch("https://jsonplaceholder.typicode.com/users");
+          if (pattern.ok){
+            let jpattern= await pattern.json();
+            let mainRow=document.querySelector(".row");
+            for (i=0;i<jpattern.length;i++){
+              mainRow.innerHTML+=`
+              <div class="col-3">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">${jpattern[i].name}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${jpattern[i].username}</h6>
+                    <p class="card-text">Company:<br>${jpattern[i].company.name}</p>
+                    <a href="mailto:${jpattern[i].email}" class="card-link">Email</a>
+                    <a href="https://www.${jpattern[i].website}" class="card-link">Website</a>
+                  </div>
+                </div>
+              </div>`;
+            }
+            document.getElementById("selectors").addEventListener("change",function(){
+              searchParam=this.value;
+            })
+            document.querySelector(".btn-success").addEventListener("click", function(){
+              let searchV=document.getElementById("searchValue").value;
+              mainRow.innerText="";
+              let jpattern2= await jpattern.filter(function(element){
+                console.log(element);
+                console.log(searchParam);
+                console.log(element.searchParam);
+                return element.searchParam.includes(searchV);
+              })
+              console.log(jpattern2);
+            })
+            console.log(jpattern);
+          }
+        }
+        catch{
+          console.log("Error fetching");
+        }
+        document.getElementById("selectors").addEventListener("change",function(){
+          searchParam=this.value;
+        })
+        document.querySelector(".btn-success").addEventListener("click", function(){
+          let searchV=document.getElementById("searchValue").value;
+        })
+      }
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
