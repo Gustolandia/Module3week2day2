@@ -54,6 +54,7 @@
     </div>
     <script>
       let searchParam="name";
+      let obj=[];
       window.onload = async function(){
         
         try{
@@ -63,12 +64,14 @@
             let mainRow=document.querySelector(".row");
             for (i=0;i<jpattern.length;i++){
               mainRow.innerHTML+=`
-              <div class="col-3">
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="card" style="width: 18rem;">
                   <div class="card-body">
                     <h5 class="card-title">${jpattern[i].name}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">${jpattern[i].username}</h6>
-                    <p class="card-text">Company:<br>${jpattern[i].company.name}</p>
+                    <p class="card-text">Company:<br>${jpattern[i].company.name}
+                    <br>Address:<br>${jpattern[i].address.suite}<br> ${jpattern[i].address.street}<br>
+                    ${jpattern[i].address.zipcode} ${jpattern[i].address.city}</p>
                     <a href="mailto:${jpattern[i].email}" class="card-link">Email</a>
                     <a href="https://www.${jpattern[i].website}" class="card-link">Website</a>
                   </div>
@@ -78,16 +81,29 @@
             document.getElementById("selectors").addEventListener("change",function(){
               searchParam=this.value;
             })
-            document.querySelector(".btn-success").addEventListener("click", function(){
+            document.querySelector(".btn-success").addEventListener("click", async function(){
               let searchV=document.getElementById("searchValue").value;
               mainRow.innerText="";
               let jpattern2= await jpattern.filter(function(element){
-                console.log(element);
-                console.log(searchParam);
-                console.log(element.searchParam);
-                return element.searchParam.includes(searchV);
+                console.log(element[searchParam]);
+                return element[searchParam].toLowerCase().includes(searchV.toLowerCase());
               })
-              console.log(jpattern2);
+              for (i=0;i<jpattern2.length;i++){
+              mainRow.innerHTML+=`
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">${jpattern2[i].name}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${jpattern2[i].username}</h6>
+                    <p class="card-text">Company:<br>${jpattern2[i].company.name}
+                    <br>Address:<br>${jpattern2[i].address.suite}<br> ${jpattern2[i].address.street}<br>
+                    ${jpattern2[i].address.zipcode} ${jpattern2[i].address.city}</p>
+                    <a href="mailto:${jpattern2[i].email}" class="card-link">Email</a>
+                    <a href="https://www.${jpattern2[i].website}" class="card-link">Website</a>
+                  </div>
+                </div>
+              </div>`;
+            }
             })
             console.log(jpattern);
           }
